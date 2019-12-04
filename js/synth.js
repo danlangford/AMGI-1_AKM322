@@ -150,61 +150,15 @@ function $(id) {
 	return document.getElementById(id);
 }
 
+inputMap={1:'fMod',7:'volume',10:'fA',21:'fD',22:'fS',23:'fR',91:'reverb'}
+
 // 'value' is normalized to 0..1.
 function controller( number, value ) {
-	switch(number) {
-	case 2:
-		$("fFreq").setRatioValue(value);
-		onUpdateFilterCutoff( 100*value );
-		return;
-	case 0x0a:
-	case 7:
-		$("fQ").setValue(20*value);
-		onUpdateFilterQ( 20*value );
-		return;
-	case 1:
-		$("fMod").setValue(100*value);
-		onUpdateFilterMod(100*value);	
-		return;
-	case 0x49:
-	case 5:
-	case 15:
-	    $("drive").setValue(100 * value);
-	    onUpdateDrive( 100 * value );
-	    return;
-	case 0x48:
-	case 6:
-	case 16:
-	    $("reverb").setValue(100 * value);
-	    onUpdateReverb( 100 * value );
-	    return;
-	case 0x4a:
-	    $("modOsc1").setValue(100 * value);
-	    onUpdateModOsc1( 100 * value );
-	    return;
-	case 0x47:
-	    $("modOsc2").setValue(100 * value);
-	    onUpdateModOsc2( 100 * value );
-	    return;
-	case 4:
-	case 17:
-	    $("mFreq").setValue(10 * value);
-	    onUpdateModFrequency( 10 * value );
-	    return;
-	case 0x5b:
-	    $("volume").setValue(100 * value);
-	    onUpdateVolume( 100 * value );
-	    return;
-	case 33: // "x1" button
-	case 51:
-		moDouble = (value > 0);
-		changeModMultiplier();
-	    return;
-	case 34: // "x2" button
-	case 52:
-		moQuadruple = (value > 0);
-		changeModMultiplier();
-	    return;
+	if (number in inputMap) {
+		$(inputMap[number]).setValue(100*value);
+		$(inputMap[number]).onchange.call(this,100*value);
+	} else {
+		console.log("not currently handling number",number,"value",value);
 	}
 }
 
@@ -386,35 +340,35 @@ function onUpdateOsc2Mix( ev ) {
 }
 
 function onUpdateEnvA( ev ) {
-	currentEnvA = ev.currentTarget.value;
+	currentEnvA = ev;
 }
 
 function onUpdateEnvD( ev ) {
-	currentEnvD = ev.currentTarget.value;
+	currentEnvD = ev;
 }
 
 function onUpdateEnvS( ev ) {
-	currentEnvS = ev.currentTarget.value;
+	currentEnvS = ev;
 }
 
 function onUpdateEnvR( ev ) {
-	currentEnvR = ev.currentTarget.value;
+	currentEnvR = ev;
 }
 
 function onUpdateFilterEnvA( ev ) {
-	currentFilterEnvA = ev.currentTarget.value;
+	currentFilterEnvA = ev;
 }
 
 function onUpdateFilterEnvD( ev ) {
-	currentFilterEnvD = ev.currentTarget.value;
+	currentFilterEnvD = ev;
 }
 
 function onUpdateFilterEnvS( ev ) {
-	currentFilterEnvS = ev.currentTarget.value;
+	currentFilterEnvS = ev;
 }
 
 function onUpdateFilterEnvR( ev ) {
-	currentFilterEnvR = ev.currentTarget.value;
+	currentFilterEnvR = ev;
 }
 
 function onUpdateDrive( value ) {

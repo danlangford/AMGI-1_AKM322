@@ -9,6 +9,7 @@ Rack.app sees the MIDI device as AKM322
 usb vendor/product combo is 1acc:1533
 
 Mac system profiler shows this info:
+
     _name=AKM322
     bcd_device=0.0b
     bus_power=500
@@ -24,20 +25,22 @@ Mac system profiler shows this info:
 ## MIDI Codes
 
 
-|label|MIDI Bytes|Command|Channel| | |
-|-----|-----|---|---|--|--
-|Pitch|124|14|0|0,64|0-127
-|Modulation|176|11|0|1|0-127
-|Volume|176|11|0|7|0-127
-|0(encoder)|176|11|0|10|0-127
-|1(knob)|176|11|0|21|0-127
-|2(knob)|176|11|0|22|0-127
-|3(knob)|176|11|0|23|0-127
-|Set+Reverb|176|11|0|91|0,64
-|▶ (play)|176|11|0|105|127
-|■ (stop)|176|11|0|106|0,127
-|● (rec)|176|11|0|107|127
-|keys|144,128|8,9|0|41-72(0-120)|0-127
+|Keyboard Label|MIDI Bytes|Command|Channel|               | Values 
+|--------------|----------|-------|-------|---------------|-------
+| Pitch        | 124      | 14    | 0     | 0,64          | 0-127
+| Modulation   | 176      | 11    | 0     | 1             | 0-127
+| Volume       | 176      | 11    | 0     | 7             | 0-127
+| 0(encoder)   | 176      | 11    | 0     | 10            | 0-127
+| 1(knob)      | 176      | 11    | 0     | 21            | 0-127
+| 2(knob)      | 176      | 11    | 0     | 22            | 0-127
+| 3(knob)      | 176      | 11    | 0     | 23            | 0-127
+| Set+Reverb   | 176      | 11    | 0     | 91            | 0,64
+| ▶ (play)     | 176      | 11    | 0     | 105           | 127
+| ■ (stop)     | 176      | 11    | 0     | 106           | 0,127
+| ● (rec)      | 176      | 11    | 0     | 107           | 127
+| keys         | 144,128  | 8,9   | 0     | 41-72 (0-120) | 0-127
+
+> NOTE: some systems refer to the codes in hexadecimal instead of decimal. Reverb is typically 0x5B or 91. I will prefer the decimal (91) in this document and code.
 
 ## MIDI Synth
 

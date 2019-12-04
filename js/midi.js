@@ -4,6 +4,8 @@ function midiMessageReceived( ev ) {
   var noteNumber = ev.data[1];
   var velocity = ev.data[2];
 
+  console.log('ev.data',ev.data,'cmd',cmd,'channel',channel,'noteNumber',noteNumber,'velocity',velocity)
+
   if (channel == 9)
     return
   if ( cmd==8 || ((cmd==9)&&(velocity==0)) ) { // with MIDI, note on with velocity zero is the same as note off
@@ -13,6 +15,11 @@ function midiMessageReceived( ev ) {
     // note on
     noteOn( noteNumber, velocity/127.0);
   } else if (cmd == 11) {
+    // the AKM322 reverb toggles between 0% & 50%
+    // which i dont like. so Ill make the reverb toggle to 100%
+    if(noteNumber==91&&velocity>0){
+      velocity=127;
+    }
     controller( noteNumber, velocity/127.0);
   } else if (cmd == 14) {
     // pitch wheel
