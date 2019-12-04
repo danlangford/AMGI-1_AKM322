@@ -1,4 +1,45 @@
-# MIDI Synth
+# AWS DeepComposer Keyboard AMGI-1 / AKM322
+
+The sticker reads Model Number: AMGI-1
+
+My serial number is: 00000791
+
+Rack.app sees the MIDI device as AKM322
+
+usb vendor/product combo is 1acc:1533
+
+Mac system profiler shows this info:
+    _name=AKM322
+    bcd_device=0.0b
+    bus_power=500
+    bus_power_used=100
+    device_speed=full_speed
+    extra_current_used=0
+    location_id=0x14100000 / 13<
+    manufacturer=MIDIPLUS
+    product_id=0x1533
+    serial_num=MIDIPLUS-CC-1533-00AKM322
+    vendor_id=0x1acc
+
+## MIDI Codes
+
+
+|label|MIDI Bytes|Command|Channel| | |
+|-----|-----|---|---|--|--
+|Pitch|124|14|0|0,64|0-127
+|Modulation|176|11|0|1|0-127
+|Volume|176|11|0|7|0-127
+|0(encoder)|176|11|0|10|0-127
+|1(knob)|176|11|0|21|0-127
+|2(knob)|176|11|0|22|0-127
+|3(knob)|176|11|0|23|0-127
+|Set+Reverb|176|11|0|91|0,64
+|▶ (play)|176|11|0|105|127
+|■ (stop)|176|11|0|106|0,127
+|● (rec)|176|11|0|107|127
+|keys|144,128|8,9|0|41-72(0-120)|0-127
+
+## MIDI Synth
 
 This application is a analog synthesizer simulation built on the [Web Audio API](https://webaudio.github.io/web-audio-api/).  It is very loosely based on the architecture of a [Moog Prodigy](http://www.vintagesynth.com/moog/prodigy.php) synthesizer, although this is a polyphonic synthesizer, and it lacks the oscillator sync and glide effects of the Prodigy.  (AKA: this is not intended to be a replication of the Prodigy, so pleased don't tell me how crappy a reproduction it is! :)
 
