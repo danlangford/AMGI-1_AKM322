@@ -150,7 +150,7 @@ function $(id) {
 	return document.getElementById(id);
 }
 
-inputMap={1:'fMod',7:'volume',10:'fA',21:'fD',22:'fS',23:'fR',91:'reverb'}
+inputMap={1:'fMod',7:'volume',10:'mFreq',21:'fFreq',22:'fQ',23:'reverb',91:'reverb'}
 
 // 'value' is normalized to 0..1.
 function controller( number, value ) {
@@ -738,6 +738,7 @@ function onChangeOctave( ev ) {
 
 
 function initAudio() {
+	drawKeys(41,72);
 	window.AudioContext = window.AudioContext || window.webkitAudioContext;
 	try {
     	audioContext = new AudioContext();

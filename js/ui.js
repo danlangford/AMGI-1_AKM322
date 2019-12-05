@@ -103,60 +103,152 @@ function createSection( label, x, y, width, height ) {
 	return container;
 }
 
+// AKM322 = 41-72
+keyMapping = {
+	29:{type:"white"},
+	30:{type:"black"},
+	31:{type:"white"},
+	32:{type:"black"},
+	33:{type:"white"},
+	34:{type:"black"},
+	35:{type:"white"},
+	36:{type:"white"},
+	37:{type:"black"},
+	38:{type:"white"},
+	39:{type:"black"},
+	40:{type:"white"},
+	41:{type:"white"},
+	42:{type:"black"},
+	43:{type:"white"},
+	44:{type:"black"},
+	45:{type:"white"},
+	46:{type:"black"},
+	47:{type:"white"},
+	48:{type:"white"},
+	49:{type:"black"},
+	50:{type:"white"},
+	51:{type:"black"},
+	52:{type:"white"},
+	53:{type:"white"},
+	54:{type:"black"},
+	55:{type:"white"},
+	56:{type:"black"},
+	57:{type:"white"},
+	58:{type:"black"},
+	59:{type:"white"},
+	60:{type:"white"},
+	61:{type:"black"},
+	62:{type:"white"},
+	63:{type:"black"},
+	64:{type:"white"},
+	65:{type:"white"},
+	66:{type:"black"},
+	67:{type:"white"},
+	68:{type:"black"},
+	69:{type:"white"},
+	70:{type:"black"},
+	71:{type:"white"},
+	72:{type:"white"},
+	73:{type:"black"},
+	74:{type:"white"},
+	75:{type:"black"},
+	76:{type:"white"},
+	77:{type:"white"},
+	78:{type:"black"},
+	79:{type:"white"},
+	80:{type:"black"},
+	81:{type:"white"},
+	82:{type:"black"},
+	83:{type:"white"},
+}
+
+function createKey(num, type){
+	var elem = document.createElement('span');
+	elem.id='k'+num;
+	elem.className=type+" key";
+	return elem;
+}
+
+function createBlackKeySpacer(){
+	var elem = document.createElement('span');
+	elem.className='spacer';
+	return elem;
+}
+
+function drawKeys(keyBot,keyTop){
+	keybox = $("keybox");
+	blackkeys = $("blackkeys");
+
+	for(k=keyBot;k<=keyTop;k++){
+		key=createKey(k,keyMapping[k].type);
+		if (keyMapping[k].type==='black'){
+			blackkeys.appendChild(key);
+		} else if (keyMapping[k].type==='white') {
+			keybox.appendChild(key);
+			if (keyMapping[k-1].type==='white') {
+				blackkeys.appendChild(createBlackKeySpacer());
+			}
+		} else {
+			console.log('unknown key type',k);
+		}
+	}
+
+}
+
 function setupSynthUI() {
 	synthBox = document.getElementById("synthbox");
 	
 	var mod = createSection( "mod", 10, 10, 87, 342 );
 	mod.appendChild( createDropdown( "modwave", "shape", 12, 15, ["sine","square", "saw", "triangle"], currentModWaveform, onUpdateModWaveform ))
-	mod.appendChild( createKnob( "mFreq", "freq", 80, 12, 65, 0, 10, currentModFrequency, "#c10087", onUpdateModFrequency ) );
-	mod.appendChild( createKnob( "modOsc1", "osc1 vibrato", 80, 12, 160, 0, 100, currentModOsc1, "#c10087", onUpdateModOsc1 ) );
-	mod.appendChild( createKnob( "modOsc2", "osc2 vibrato", 80, 12, 255, 0, 100, currentModOsc2, "#c10087", onUpdateModOsc2 ) );
+	mod.appendChild( createKnob( "mFreq", "freq",           80,    12, 65,     0, 10, currentModFrequency, "#c10087", onUpdateModFrequency ) );
+	mod.appendChild( createKnob( "modOsc1", "osc1 vibrato", 80,    12, 160,    0, 100, currentModOsc1, "#c10087", onUpdateModOsc1 ) );
+	mod.appendChild( createKnob( "modOsc2", "osc2 vibrato", 80,    12, 255,    0, 100, currentModOsc2, "#c10087", onUpdateModOsc2 ) );
 	synthBox.appendChild( mod );
 
 	var osc1 = createSection( "OSC1", 130, 10, 223, 160 );	
 	osc1.appendChild( createDropdown( "osc1wave", "waveform", 10, 15, ["sine","square", "saw", "triangle"/*, "wavetable"*/], currentOsc1Waveform, onUpdateOsc1Wave ))
 	osc1.appendChild( createDropdown( "osc1int", "interval",  140, 15, ["32'","16'", "8'"], currentOsc1Octave, onUpdateOsc1Octave ) );
-	osc1.appendChild( createKnob(     "osc1detune", "detune", 100, 10, 65, -1200, 1200, currentOsc1Detune, "blue", onUpdateOsc1Detune ) );
-	osc1.appendChild( createKnob(     "osc1mix", "mix",       100, 130, 65, 0, 100, currentOsc1Mix, "blue", onUpdateOsc1Mix ) );
+	osc1.appendChild( createKnob(     "osc1detune", "detune", 100,  10, 65,    -1200, 1200, currentOsc1Detune, "blue", onUpdateOsc1Detune ) );
+	osc1.appendChild( createKnob(     "osc1mix", "mix",       100,  130, 65,       0, 100, currentOsc1Mix, "blue", onUpdateOsc1Mix ) );
 	synthBox.appendChild( osc1 );
 
 	var osc2 = createSection( "OSC2", 130, 192, 223, 160 );	
 	osc2.appendChild( createDropdown( "osc2wave", "waveform", 10, 15, ["sine","square", "saw", "triangle"/*, "wavetable"*/], currentOsc2Waveform, onUpdateOsc2Wave ))
 	osc2.appendChild( createDropdown( "osc2int", "interval", 140, 15, ["16'","8'", "4'"], currentOsc2Octave, onUpdateOsc2Octave ) );
-	osc2.appendChild( createKnob( "osc2detune", "detune", 100, 10, 65, -1200, 1200, currentOsc2Detune, "blue", onUpdateOsc2Detune ) );
-	osc2.appendChild( createKnob( "osc2mix", "mix", 100, 130, 65, 0, 100, currentOsc2Mix, "blue", onUpdateOsc2Mix ) );
+	osc2.appendChild( createKnob( "osc2detune", "detune",  100,    10, 65,    -1200, 1200, currentOsc2Detune, "blue", onUpdateOsc2Detune ) );
+	osc2.appendChild( createKnob( "osc2mix", "mix",        100,   130, 65,       0, 100, currentOsc2Mix, "blue", onUpdateOsc2Mix ) );
 	synthBox.appendChild( osc2 );
 
 	var filter = createSection( "filter", 387, 10, 80, 342 );	
-	filter.appendChild( createKnob( "fFreq", "cutoff", 75, 12, 15, 20, 20000, Math.pow(2,currentFilterCutoff), "#ffaa00", onUpdateFilterCutoff, "Hz", true ) );
-	filter.appendChild( createKnob( "fQ", "q",       75, 12, 100, 0, 20, currentFilterQ, "#ffaa00", onUpdateFilterQ ) );
-	filter.appendChild( createKnob( "fMod", "mod",   75, 12, 185, 0, 100, currentFilterMod, "#ffaa00", onUpdateFilterMod ) );
-	filter.appendChild( createKnob( "fEnv", "env",   75, 12, 270, 0, 100, currentFilterEnv, "#ffaa00", onUpdateFilterEnv ) );
+	filter.appendChild( createKnob( "fFreq", "cutoff",     75,     12, 15,      20, 20000, Math.pow(2,currentFilterCutoff), "#ffaa00", onUpdateFilterCutoff, "Hz", true ) );
+	filter.appendChild( createKnob( "fQ", "q",             75,     12, 100,      0, 20, currentFilterQ, "#ffaa00", onUpdateFilterQ ) );
+	filter.appendChild( createKnob( "fMod", "mod",         75,     12, 185,      0, 100, currentFilterMod, "#ffaa00", onUpdateFilterMod ) );
+	filter.appendChild( createKnob( "fEnv", "env",         75,     12, 270,      0, 100, currentFilterEnv, "#ffaa00", onUpdateFilterEnv ) );
 	synthBox.appendChild( filter );
 
 	var filterEnv = createSection( "filter envelope", 501, 10, 355, 98 );	
-	filterEnv.appendChild( createKnob( "fA", "attack",  80,   10, 20, 0, 100, currentFilterEnvA, "#bf8f30", onUpdateFilterEnvA ) );
-	filterEnv.appendChild( createKnob( "fD", "decay",   80,  100, 20, 0, 100, currentFilterEnvD, "#bf8f30", onUpdateFilterEnvD ) );
-	filterEnv.appendChild( createKnob( "fS", "sustain", 80,  190, 20, 0, 100, currentFilterEnvS, "#bf8f30", onUpdateFilterEnvS ) );
-	filterEnv.appendChild( createKnob( "fR", "release", 80,  280, 20, 0, 100, currentFilterEnvR, "#bf8f30", onUpdateFilterEnvR ) );
+	filterEnv.appendChild( createKnob( "fA", "attack",    80,     10, 20,        0, 100, currentFilterEnvA, "#bf8f30", onUpdateFilterEnvA ) );
+	filterEnv.appendChild( createKnob( "fD", "decay",     80,    100, 20,        0, 100, currentFilterEnvD, "#bf8f30", onUpdateFilterEnvD ) );
+	filterEnv.appendChild( createKnob( "fS", "sustain",   80,    190, 20,        0, 100, currentFilterEnvS, "#bf8f30", onUpdateFilterEnvS ) );
+	filterEnv.appendChild( createKnob( "fR", "release",   80,    280, 20,        0, 100, currentFilterEnvR, "#bf8f30", onUpdateFilterEnvR ) );
 	synthBox.appendChild( filterEnv );
 
 	var volumeEnv = createSection( "volume envelope", 501, 131, 355, 98 );	
-	volumeEnv.appendChild( createKnob( "vA", "attack",  80,   10, 20, 0, 100, currentEnvA, "#00b358", onUpdateEnvA ) );
-	volumeEnv.appendChild( createKnob( "vD", "decay",   80,  100, 20, 0, 100, currentEnvD, "#00b358", onUpdateEnvD ) );
-	volumeEnv.appendChild( createKnob( "vS", "sustain", 80,  190, 20, 0, 100, currentEnvS, "#00b358", onUpdateEnvS ) );
-	volumeEnv.appendChild( createKnob( "vR", "release", 80,  280, 20, 0, 100, currentEnvR, "#00b358", onUpdateEnvR ) );
+	volumeEnv.appendChild( createKnob( "vA", "attack",   80,     10, 20,        0, 100, currentEnvA, "#00b358", onUpdateEnvA ) );
+	volumeEnv.appendChild( createKnob( "vD", "decay",    80,    100, 20,        0, 100, currentEnvD, "#00b358", onUpdateEnvD ) );
+	volumeEnv.appendChild( createKnob( "vS", "sustain",  80,    190, 20,        0, 100, currentEnvS, "#00b358", onUpdateEnvS ) );
+	volumeEnv.appendChild( createKnob( "vR", "release",  80,    280, 20,        0, 100, currentEnvR, "#00b358", onUpdateEnvR ) );
 	synthBox.appendChild( volumeEnv );
 
 	var master = createSection( "master", 501, 254, 355, 98 );	
-	master.appendChild( createKnob( "drive", "drive",    80,   10, 20, 0, 100, currentDrive, "yellow", onUpdateDrive ) );
-	master.appendChild( createKnob( "reverb", "reverb",     80,  100, 20, 0, 100, currentRev, "yellow", onUpdateReverb ) );
-	master.appendChild( createKnob( "volume", "volume",     80,  190, 20, 0, 100, currentVol, "yellow", onUpdateVolume ) );
+	master.appendChild( createKnob( "drive", "drive",    80,    10, 20,         0, 100, currentDrive, "yellow", onUpdateDrive ) );
+	master.appendChild( createKnob( "reverb", "reverb",  80,   100, 20,         0, 100, currentRev, "yellow", onUpdateReverb ) );
+	master.appendChild( createKnob( "volume", "volume",  80,   190, 20,         0, 100, currentVol, "yellow", onUpdateVolume ) );
 	master.appendChild( createDropdown( "midiIn", "midi_in", 280, 15, ["-no MIDI-"], 0, selectMIDIIn ) );
 	master.appendChild( createDropdown( "kbd_oct", "kbd_oct", 280, 60, ["+3", "+2","+1", "normal", "-1", "-2", "-3"], 3, onChangeOctave ) );
 	synthBox.appendChild( master );
 
-	keybox = document.getElementById("keybox");
+	keybox = $("keybox");
 
 	if (window.location.search.substring(1) == "touch") {
 		keybox.addEventListener('touchstart', touchstart);
